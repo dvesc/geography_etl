@@ -1,6 +1,6 @@
 const fs = require('fs'),
   config = require('config'),
-  init_mongo = require('../../db/mongo_conection'),
+  init_mongo = require('../db/mongo_conection'),
   upload_data = require('../services/upload_service'),
   error_handler = require('../error/error_handler'),
   FileNotFoundException = require('../error/FileNotFoundException');
