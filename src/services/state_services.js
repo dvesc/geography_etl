@@ -1,5 +1,4 @@
 const mongoose = require('mongoose'),
-  config = require('config'),
   error_handler = require('../error/error_handler'),
   DTOValidationException = require('../error/DTOValidationException');
 
@@ -14,8 +13,8 @@ const state_model = require('../models/state_model'),
         extras: [],
         active: true,
         status: 'ready',
-        created_by: mongoose.Types.ObjectId(config.get('db.model.created_by')),
-        _partitionKey: config.get('db.model._partitionKey'),
+        created_by: mongoose.Types.ObjectId(process.env.DB_MODEL_CREATED_BY),
+        _partitionKey: process.env.DB_MODEL_PARTITIONKEY,
       });
 
       return state_vo._id;

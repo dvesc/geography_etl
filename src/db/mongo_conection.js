@@ -1,13 +1,10 @@
-const mongoose = require('mongoose'),
-  config = require('config');
+const mongoose = require('mongoose');
 
 const init_mongo = async () => {
   let inital_conection_flag = false;
   await mongoose
     .connect(
-      `mongodb+srv://${config.get('db.username')}:${config.get(
-        'db.password'
-      )}@${config.get('db.host')}/${config.get('db.name')}`
+      `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}/${process.env.DB_NAME}`
     )
     .then(() => {
       console.log('[MONGO] Success initial connection to the MongoDB server ');

@@ -1,5 +1,4 @@
 const mongoose = require('mongoose'),
-  config = require('config'),
   city_model = require('../models/city_model'),
   error_handler = require('../error/error_handler'),
   DTOValidationException = require('../error/DTOValidationException');
@@ -13,8 +12,8 @@ const create_city = async (city_dto, state_id) => {
       extras: [],
       active: true,
       status: 'ready',
-      created_by: mongoose.Types.ObjectId(config.get('db.model.created_by')),
-      _partitionKey: config.get('db.model._partitionKey'),
+      created_by: mongoose.Types.ObjectId(process.env.DB_MODEL_CREATED_BY),
+      _partitionKey: process.env.DB_MODEL_PARTITIONKEY,
     });
   } catch (e) {
     error_handler(new DTOValidationException(e), city_dto);

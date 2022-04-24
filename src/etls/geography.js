@@ -1,14 +1,15 @@
 const fs = require('fs'),
-  config = require('config'),
   init_mongo = require('../db/mongo_conection'),
   upload_data = require('../services/upload_service'),
   error_handler = require('../error/error_handler'),
   FileNotFoundException = require('../error/FileNotFoundException');
 
+require('dotenv').config();
+
 (async function () {
   // Cuando se establesca la coneccion inicial...
   if (await init_mongo()) {
-    const json_path = config.get('files.path');
+    const json_path = process.env.FILES_PATH;
 
     try {
       // Buscamos el json y comprobamos que exista

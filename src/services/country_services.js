@@ -1,5 +1,4 @@
 const mongoose = require('mongoose'),
-  config = require('config'),
   country_model = require('../models/country_model'),
   error_handler = require('../error/error_handler'),
   DTOValidationException = require('../error/DTOValidationException');
@@ -8,21 +7,18 @@ const create_country = async country_dto => {
   try {
     const names = [];
     // por cada lenguaje en la env creamos un 'name schema'
-    config
-      .get('db.model.language')
-      .split('|')
-      .forEach(language => {
-        let value;
-        // Si el idioma es "default" o "en" el valor sera 'country.name' si no, es una propiedad dinamica
-        if (/^(default|en)$/i.test(language)) value = country_dto.name;
-        else value = country_dto.translations[`${language}`];
+    process.env.DB_MODEL_LANGUAGE.split('|').forEach(language => {
+      let value;
+      // Si el idioma es "default" o "en" el valor sera 'country.name' si no, es una propiedad dinamica
+      if (/^(default|en)$/i.test(language)) value = country_dto.name;
+      else value = country_dto.translations[`${language}`];
 
-        names.push({
-          description: '',
-          value,
-          language,
-        });
+      names.push({
+        description: '',
+        value,
+        language,
       });
+    });
 
     const country_vo = await country_model.create({
       slug: country_dto.name.toLowerCase(),
@@ -63,8 +59,8 @@ const create_country = async country_dto => {
       ],
       active: true,
       status: 'ready',
-      created_by: mongoose.Types.ObjectId(config.get('db.model.created_by')),
-      _partitionKey: config.get('db.model._partitionKey'),
+      created_by: mongoose.Types.ObjectId(process.env.DB_MODEL_CREATED_BY),
+      _partitionKey: process.env.DB_MODEL_PARTITIONKEY,
     });
 
     return country_vo._id;
