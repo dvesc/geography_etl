@@ -1,4 +1,4 @@
-# geography_etl
+# Geography ETL
 ***
-##Importan  
-debido a la gran cantidad de datos, la subida de los mismos tarta unos momentos
+## Importand
+Due to the large amount of data, it takes a few moments to load
